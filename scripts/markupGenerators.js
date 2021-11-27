@@ -1,7 +1,11 @@
-const skillsMarkup = (arrayOfSkills) => {
+const skillsMarkup = (person, arrayOfSkills) => {
   const arrayOfMarkupBits = [];
   arrayOfSkills.forEach((skill) => {
-    arrayOfMarkupBits.push(`<span class="badge bg-info text-dark">${skill.name}</span>`);
+    arrayOfMarkupBits.push(`<span class="badge bg-info text-dark" 
+                                  data-username="${person.username}"
+                                  data-skillname="${skill.name}"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#skillDetailsModal">${skill.name}</span>`);
   });
   return arrayOfMarkupBits.join('');
 };
@@ -11,7 +15,7 @@ const listOfPeopleMarkup = (listOfPeople) => {
 
   listOfPeople.forEach((person) => {
     const topSkills = person.skills.slice(0, 14);
-    const skills = skillsMarkup(topSkills);
+    const topSkillsMarkup = skillsMarkup(person, topSkills);
 
     const {
       picture, name, professionalHeadline, locationName,
@@ -31,7 +35,7 @@ const listOfPeopleMarkup = (listOfPeople) => {
             </div>
           </div>
           <div class="card-body">
-              ${skills}
+              ${topSkillsMarkup}
             </div>
         </div>
       </div>
@@ -42,4 +46,31 @@ const listOfPeopleMarkup = (listOfPeople) => {
   return arrayOfMarkupBits.join('');
 };
 
-export default listOfPeopleMarkup;
+const skillDetailsMarkup = (skillDetails) => {
+  const {
+    name, proficiency, recommendations, weight,
+  } = skillDetails;
+
+  return `
+  <div class="modal-header">
+    <h5 class="modal-title" id="skillDetailsModalLabel">${name}</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+      <ul class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Proficiency
+        <span class="badge bg-primary rounded-pill">${proficiency}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Recommendations
+        <span class="badge bg-primary rounded-pill">${recommendations}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Weight
+        <span class="badge bg-primary rounded-pill">${weight}</span>
+      </li>
+    </ul>
+  </div>`;
+};
+export { listOfPeopleMarkup, skillDetailsMarkup };
