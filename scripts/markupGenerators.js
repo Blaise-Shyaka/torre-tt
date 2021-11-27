@@ -5,6 +5,7 @@ const skillsMarkup = (person, arrayOfSkills) => {
                                   data-username="${person.username}"
                                   data-skillname="${skill.name}"
                                   data-bs-toggle="modal"
+                                  role="button"
                                   data-bs-target="#skillDetailsModal">${skill.name}</span>`);
   });
   return arrayOfMarkupBits.join('');

@@ -6,4 +6,8 @@ const addEventHandlerToElementsOfClass = (elementClass, handler) => {
     elements[i].addEventListener('click', handler, false);
   }
 };
-export { resetHTMLElement, addEventHandlerToElementsOfClass };
+
+const toggleSpinner = (spinnerClass) => {
+  document.querySelector(spinnerClass).classList.toggle('visually-hidden');
+};
+export { resetHTMLElement, addEventHandlerToElementsOfClass, toggleSpinner };
